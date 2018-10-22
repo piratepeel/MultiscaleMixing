@@ -73,9 +73,10 @@ def localAssortF(E, M, pr=np.arange(0., 1., 0.1), undir=True, missingValue=-1):
 def createA(E, n, m, undir=True):
 
     if undir:
+        valid_edges = [e for e in list(E) if -1 not in e]
         G = nx.Graph()
         G.add_nodes_from(range(n))
-        G.add_edges_from(list(E))
+        G.add_edges_from(valid_edges)
         A = nx.to_scipy_sparse_matrix(G)
     else:
         A = sparse.coo_matrix((np.ones(m), (E[:, 0], E[:, 1])),
