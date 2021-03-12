@@ -3,7 +3,7 @@ Multiscale mixing patterns in networks.
 
 Code to calculate the multiscale assortativity from the accompanying paper:
 Peel, L., Delvenne, J. C., & Lambiotte, R. (2018). 'Multiscale mixing patterns
- in networks.' PNAS, 115(16), 4057-4062.
+in networks.' PNAS, 115(16), 4057-4062.
 """
 
 import numpy as np
@@ -15,7 +15,7 @@ def localAssortF(edgelist, node_attr, pr=np.arange(0., 1., 0.1), undir=True,
                  missingValue=-1):
     """Calculate the multiscale assortativity.
 
-    Parameters:
+    Parameters
     ----------
     edgelist : array_like
         the network represented as an edge list,
@@ -32,11 +32,11 @@ def localAssortF(edgelist, node_attr, pr=np.arange(0., 1., 0.1), undir=True,
     missingValue : int, optional
         token to indicate missing attribute values (default: -1)
 
-    Returns:
-    --------
+    Returns
+    -------
     assortM : array_like
-        n x |pr| array of local assortativities, each column corresponds to a
-        value of the input restart probabilities, pr. Note if only number of
+        n x len(pr) array of local assortativities, each column corresponds to
+        a value of the input restart probabilities, pr. Note if only number of
         restart probabilties is greater than one (i.e., len(pr) > 1).
     assortT : array_like
         n length array of multiscale assortativities
@@ -45,6 +45,8 @@ def localAssortF(edgelist, node_attr, pr=np.arange(0., 1., 0.1), undir=True,
 
     References
     ----------
+    For full details see [1]_
+
     .. [1] Peel, L., Delvenne, J. C., & Lambiotte, R. (2018). "Multiscale
         mixing patterns in networks.' PNAS, 115(16), 4057-4062.
     """
@@ -171,7 +173,7 @@ def calculateRWRrange(W, i, alphas, n, maxIter=1000):
 
     References
     ----------
-    See [2] and [3] for further details.
+    See [2]_ and [3]_ for further details.
 
     .. [2] Boldi, P. (2005). "TotalRank: Ranking without damping." In Special
         interest tracks and posters of the 14th international conference on
