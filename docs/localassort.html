@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>localassort module &mdash; MultiscaleMixing 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="loadNetwork module" href="loadNetwork.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MultiscaleMixing
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MultiscaleMixing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="loadNetwork.html">loadNetwork module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">localassort module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MultiscaleMixing</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">MultiscaleMixing</a> &raquo;</li>
+        
+      <li>localassort module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/localassort.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-localassort">
+<span id="localassort-module"></span><h1>localassort module<a class="headerlink" href="#module-localassort" title="Permalink to this headline">¶</a></h1>
+<p>Multiscale mixing patterns in networks.</p>
+<p>Code to calculate the multiscale assortativity from the accompanying paper:
+Peel, L., Delvenne, J. C., &amp; Lambiotte, R. (2018). ‘Multiscale mixing patterns
+in networks.’ PNAS, 115(16), 4057-4062.</p>
+<dl class="py function">
+<dt id="localassort.calculateRWRrange">
+<code class="sig-prename descclassname"><span class="pre">localassort.</span></code><code class="sig-name descname"><span class="pre">calculateRWRrange</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">W</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxIter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#localassort.calculateRWRrange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the personalised TotalRank and personalised PageRank vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>W</strong> (<em>array_like</em>) – transition matrix (row normalised adjacency matrix)</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – index of the personalisation node</p></li>
+<li><p><strong>alphas</strong> (<em>array_like</em>) – array of (1 - restart probabilties)</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of nodes in the network</p></li>
+<li><p><strong>maxIter</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of interations (default: 1000)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>pPageRank_all</strong> (<em>array_like</em>) – personalised PageRank for all input alpha values (only calculated if
+more than one alpha given as input, i.e., len(alphas) &gt; 1)</p></li>
+<li><p><strong>pTotalRank</strong> (<em>array_like</em>) – personalised TotalRank (personalised PageRank with alpha integrated
+out)</p></li>
+<li><p><strong>it</strong> (<em>int</em>) – number of iterations</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>See <a class="footnote-reference brackets" href="#id3" id="id1">2</a> and <a class="footnote-reference brackets" href="#id4" id="id2">3</a> for further details.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dd><p>Boldi, P. (2005). “TotalRank: Ranking without damping.” In Special
+interest tracks and posters of the 14th international conference on
+World Wide Web (pp. 898-899).</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">3</a></span></dt>
+<dd><p>Boldi, P., Santini, M., &amp; Vigna, S. (2007). “A deeper investigation
+of PageRank as a function of the damping factor.” In Dagstuhl Seminar
+Proceedings. Schloss Dagstuhl-Leibniz-Zentrum für Informatik.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="localassort.createA">
+<code class="sig-prename descclassname"><span class="pre">localassort.</span></code><code class="sig-name descname"><span class="pre">createA</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#localassort.createA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create adjacency matrix and degree sequence.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="localassort.localAssortF">
+<code class="sig-prename descclassname"><span class="pre">localassort.</span></code><code class="sig-name descname"><span class="pre">localAssortF</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edgelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_attr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4,</span> <span class="pre">0.5,</span> <span class="pre">0.6,</span> <span class="pre">0.7,</span> <span class="pre">0.8,</span> <span class="pre">0.9])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missingValue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#localassort.localAssortF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the multiscale assortativity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edgelist</strong> (<em>array_like</em>) – the network represented as an edge list,
+i.e., a E x 2 array of node pairs</p></li>
+<li><p><strong>node_attr</strong> (<em>array_like</em>) – n length array of node attribute values</p></li>
+<li><p><strong>pr</strong> (<em>array</em><em>, </em><em>optional</em>) – array of one minus restart probabilities for the random walk in
+calculating the personalised pagerank. The largest of these values
+determines the accuracy of the TotalRank vector max(pr) -&gt; 1 is more
+accurate (default: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9])</p></li>
+<li><p><strong>undir</strong> (<em>bool</em><em>, </em><em>optional</em>) – indicate if network is undirected (default: True)</p></li>
+<li><p><strong>missingValue</strong> (<em>int</em><em>, </em><em>optional</em>) – token to indicate missing attribute values (default: -1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>assortM</strong> (<em>array_like</em>) – n x len(pr) array of local assortativities, each column corresponds to
+a value of the input restart probabilities, pr. Note if only number of
+restart probabilties is greater than one (i.e., len(pr) &gt; 1).</p></li>
+<li><p><strong>assortT</strong> (<em>array_like</em>) – n length array of multiscale assortativities</p></li>
+<li><p><strong>Z</strong> (<em>array_like</em>) – N length array of per-node confidence scores</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>For full details see <a class="footnote-reference brackets" href="#id6" id="id5">1</a></p>
+<dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
+<dd><p>Peel, L., Delvenne, J. C., &amp; Lambiotte, R. (2018). “Multiscale
+mixing patterns in networks.’ PNAS, 115(16), 4057-4062.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="loadNetwork.html" class="btn btn-neutral float-left" title="loadNetwork module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Leto Peel.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
