@@ -8,7 +8,6 @@ from networkx.generators.community import stochastic_block_model as sbm
 from networkx.algorithms.community import modularity
 
 N = 800
-p = [[.1,.05], [.05, .1]]
 n_trials = 20
 
 def run_analysis(
@@ -51,6 +50,10 @@ def run_analysis(
 
 
 if __name__ == "__main__":
+    in_p = 0.1
+    out_p = 0.05
+    p = [[in_p,out_p], [out_p, in_p]]
+    
     # find the size of the smallest group
     s0s = np.arange(10, 401, 10)
     s0s = pd.Series(np.hstack([s0s]*n_trials))
@@ -65,4 +68,4 @@ if __name__ == "__main__":
     df["s0"] = s0s
     
     date_str = datetime.now().strftime('%Y_%m_%d_%H_%M')
-    df.to_csv(f"data/summary_{date_str}.csv", index=False)
+    df.to_csv(f"data/summary_inp_{in_p}_outp_{out_p}_{date_str}.csv", index=False)
