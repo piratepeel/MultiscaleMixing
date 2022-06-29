@@ -218,3 +218,44 @@ def calculateRWRrange(W, i, alphas, n, maxIter=1000):
         pPageRank_old = pPageRank.copy()
 
     return pPageRank_all, pTotalRank, it
+  
+  
+  def localAssortF_numeric(A, attribute):
+    """
+    Calculate local assortativity of A (undirected network) with respect to the values in attribute
+
+    Parameters
+    ----------
+        A : array_like (e.g. from nx.to_scipy_sparse_array(G))
+            adjacency matrix
+        attribute : array_like
+            array of numeric values 
+
+    Returns
+    -------
+    loc_ass : array_like
+        array of values representing the local assortativity of each node
+    """
+    
+    # normalize attribute
+    attribute = (attribute - np.mean(attribute))/np.std(attribute)
+
+    ## Construct transition matrix (row normalised adjacency matrix)
+    # construct diagonal inverse degree matrix
+    degree = A.sum(1)
+    n = len(G)
+    D = ss.diags(1./degree, 0, format='csc')
+    W = D @ A
+
+    ## Calculate personalized pagerank for all nodes
+    pr=np.arange(0., 1., 0.1)
+    per_pr = []
+    for i in range(n):
+        pis, ti, it = calculateRWRrange(W, i, pr, n)
+        per_pr.append(ti)
+    per_pr = np.array(per_pr)
+
+    # calculate local assortativity (G is undirected, A is symmetric)
+    loc_ass = (per_pr * ((A.T * attribute).T * attribute )).sum(1) / degree
+    
+    return loc_ass
