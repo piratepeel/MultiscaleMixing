@@ -218,9 +218,9 @@ def calculateRWRrange(W, i, alphas, n, maxIter=1000):
         pPageRank_old = pPageRank.copy()
 
     return pPageRank_all, pTotalRank, it
-  
-  
-  def localAssortF_numeric(A, attribute):
+
+
+def localAssortF_numeric(A, attribute, includeRandomise=False):
     """
     Calculate local assortativity of A (undirected network) with respect to the values in attribute
 
@@ -236,26 +236,54 @@ def calculateRWRrange(W, i, alphas, n, maxIter=1000):
     loc_ass : array_like
         array of values representing the local assortativity of each node
     """
-    
-    # normalize attribute
-    attribute = (attribute - np.mean(attribute))/np.std(attribute)
+    permuations = 200
 
-    ## Construct transition matrix (row normalised adjacency matrix)
+    # get edgelist
+    E = np.array(A.nonzero()).T
+    m = E.shape[0]
+    n = A.get_shape()[0]
+
+    degree = np.array(A.sum(1)).flatten()
     # construct diagonal inverse degree matrix
-    degree = A.sum(1)
-    n = len(G)
-    D = ss.diags(1./degree, 0, format='csc')
+    D = sparse.diags(1./degree, offsets=0, shape=(n,n), format='csc')
+    # Construct transition matrix (row normalised adjacency matrix)
     W = D @ A
 
-    ## Calculate personalized pagerank for all nodes
-    pr=np.arange(0., 1., 0.1)
-    per_pr = []
-    for i in range(n):
-        pis, ti, it = calculateRWRrange(W, i, pr, n)
-        per_pr.append(ti)
-    per_pr = np.array(per_pr)
+    print(np.mean(attribute[E[:,0]]), np.mean(attribute[E[:,1]]))
+    # normalize attributes
+    meanX = np.sum(degree*attribute) / (m)
+    stdX = np.sqrt(np.sum(degree*(attribute-meanX)**2) / (m))
+    M = (attribute - meanX) / stdX
 
-    # calculate local assortativity (G is undirected, A is symmetric)
-    loc_ass = (per_pr * ((A.T * attribute).T * attribute )).sum(1) / degree
+    DM = sparse.diags(M, 0, format='csc')
+
+    print(DM.shape, W.shape)
+    WY = np.array(DM.dot(W).dot(DM).sum(1)).flatten()
+
+    # initialise the loc_ass array
+    loc_ass = np.empty(n)
+    pr = np.array([0.9])
+    if includeRandomise:
+        loc_ass_mean = np.empty(n)
+        loc_ass_std = np.empty(n)
+
+    for i in range(n):
+        # Calculate personalized totalrank
+        _, ti, _ = calculateRWRrange(W, i, pr, n)
+        loc_ass[i] = (ti*WY).sum()
+
+        if includeRandomise:
+            Mp = M.copy()
+            loc_ass_p = np.empty(permuations)
+            for r in range(permuations):
+                np.random.shuffle(Mp)
+                DMp = sparse.diags(M, 0, format='csc')
+                WYp = np.array(DMp.dot(W).dot(DMp).sum(1)).flatten()
+                loc_ass_p[r] = (ti*WYp).sum()
+            loc_ass_mean = np.mean(loc_ass_p)
+            loc_ass_std = np.std(loc_ass_p)
     
+    if includeRandomise:
+        return loc_ass, loc_ass_mean, loc_ass_std
+
     return loc_ass
