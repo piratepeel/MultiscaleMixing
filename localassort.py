@@ -136,7 +136,7 @@ def createA(E, n, m, undir=True):
         G = nx.DiGraph()
     G.add_nodes_from(range(n))
     G.add_edges_from(list(E))
-    A = nx.to_scipy_sparse_matrix(G)
+    A = nx.to_scipy_sparse_array(G)
 
     degree = np.array(A.sum(1)).flatten()
 
